@@ -1,7 +1,6 @@
 
 
 import hal
-from rev import MotorType
 class RobotMap():
     """
     Robot map gathers all the hard coded values needed to interface with 
@@ -27,25 +26,24 @@ class CANMap():
         self.shooterMotors = {}
         self.intakeMotors = {}
         driveMotors = {}
-
+        '''The code below is an example of code for the SparkMax motor controllers'''
         #driveMotors['leftMotor'] = {'channel':0, 'inverted':True, 'type':'SparkMax', 'pid':pid, 'motorType':MotorType.kBrushless}
+        '''The code below is for controlling TalonSRX motor controllers as well as their followers'''
         driveMotors['leftMotor'] = {'channel':0, 'inverted':True, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
         driveMotors['leftFollower'] = {'channel':3, 'inverted':True, 'type':'CANTalonFollower', 'masterChannel':0, "rampRate":rampRate}
         driveMotors['rightMotor'] = {'channel':1, 'inverted':False, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
         driveMotors['rightFollower'] = {'channel':2, 'inverted':False, 'type':'CANTalonFollower', 'masterChannel':1, "rampRate":rampRate}
-
+        
         self.driveMotors = driveMotors
         
 
 class PneumaticsMap():
     def __init__(self):
-        self.pcmCan = 1
-        self.loaderOpen = 1
-        self.loaderClose = 0
-        
+        pass
+    
 class ControllerMap():
     def __init__(self):
-        '''creates two controllers for driver and shooter and assigns
+        '''creates two controllers and assigns
         axis and buttons to joysticks'''
         driverController = {}
         auxController = {}
@@ -60,7 +58,7 @@ class ControllerMap():
             driverController['rightTread'] = 5
         
         driverController['ledToggle'] = 3
-        driverController['goodGood'] = 4
+        driverController['exampleButton'] = 6
         
         driverController['voltRumble'] = 8.0
         

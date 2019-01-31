@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import wpilib
 import rev
 import ctre 
 
@@ -8,6 +7,7 @@ import ctre
 
 def createMotor(motorDescp):
     #Might want more motor types for set up
+    '''This is where all motors are set up'''
     if motorDescp['type'] == 'CANTalon':
         #if we want to use the built in encoder set it here
         if('pid' in motorDescp) and motorDescp['pid'] != None:
@@ -26,12 +26,13 @@ def createMotor(motorDescp):
         motor.set(ctre.wpi_talonsrx.ControlMode.Follower, motorDescp['masterChannel'])
         
     elif motorDescp['type'] == 'SparkMax':
+        '''This is where SparkMax motor controllers are set up'''
         motor = rev.CANSparkMax(motorDescp['channel'], motorDescp['motorType'])
-        motor.setInverted(motorDescp['inverted'])
+        
     else:
         print("Unknown Motor")
     
-    
+    motor.setInverted(motorDescp['inverted'])
     if 'currentLimits' in motorDescp:
         currentLimits = motorDescp['currentLimits']
         absMax = currentLimits['absMax']
@@ -44,6 +45,7 @@ def createMotor(motorDescp):
 
     if 'rampRate' in motorDescp:
         motor.configOpenLoopRamp(motorDescp['rampRate'],10)    
+    
     return motor
 #motor=map.CAN.driveMotors[name]
 #            motors[name]=ctre.wpi_talonsrx.WPI_TalonSRX(motor['channel'])

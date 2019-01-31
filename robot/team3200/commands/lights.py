@@ -17,24 +17,26 @@ class LedMode(IntEnum):
     kBLINK = 2
     kON = 3
 
-class GoodGood(InstantCommand):
+class ExampleButton(InstantCommand):
     def __init__(self):
-        super().__init__("GoodGood")
+        super().__init__("ExampleButton")
         
     def execute(self):
-        print("Made by Matthew McFarland")
+        '''This button is an example and prints when you press the button'''
+        print("Button Pressed")
 
 class Lights(InstantCommand):
     
     def __init__(self):
         super().__init__("Lights")
+        self.table = NetworkTables.getTable("limelight")
         
     def execute(self):
         print("Lights Toggled")
-        table = NetworkTables.getTable("limelight")
-        lightNum = table.getNumber('ledMode', None)
+        '''This toggles the lights when pressed.'''
+        lightNum = self.table.getNumber('ledMode', None)
         if lightNum == LedMode.kOFF:
-            table.putNumber('ledMode', LedMode.kON)
+            self.table.putNumber('ledMode', LedMode.kON)
         else:
-            table.putNumber('ledMode', LedMode.kOFF)
+            self.table.putNumber('ledMode', LedMode.kOFF)
             

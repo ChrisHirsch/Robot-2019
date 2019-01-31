@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import wpilib
 
 from wpilib.command.subsystem import Subsystem
 import wpilib.drive.differentialdrive as dd
@@ -9,11 +8,9 @@ from team3200.commands.joystickDrive import JoystickDrive
 import team3200
 import team3200.motorHelper
 
-import ctre
-
 class DriveTrainSub(Subsystem):
     '''
-    This is the subsystem to controller the robots wheels.
+    This is the subsystem to control the robots wheels.
     '''
     
     def __init__(self):
