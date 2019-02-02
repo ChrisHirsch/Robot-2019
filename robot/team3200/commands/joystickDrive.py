@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from wpilib.command import Command
-import hal
 class JoystickDrive(Command):
     """
     This command will read the joystick values that are used
@@ -23,10 +22,7 @@ class JoystickDrive(Command):
     def execute(self):
         '''This sets up the axes on the controller to send into tankDrive'''
         dc = self.robot.driveController
-        leftSide = dc.getRawAxis(1)
-        if hal.isSimulation():
-            rightSide = dc.getRawAxis(3) * self.sensitivity
-        else:
-            rightSide = dc.getRawAxis(5) * self.sensitivity
+        leftSide = dc.getRawAxis(self.robot.map.controllerMap.driverController['leftTread']) * self.sensitivity
+        rightSide = dc.getRawAxis(self.robot.map.controllerMap.driverController['rightTread']) * self.sensitivity
         
         self.robot.dtSub.setTankDrive(leftSide,rightSide)

@@ -10,19 +10,20 @@ from wpilib.buttons.joystickbutton import JoystickButton
 import commandbased
 from team3200.commands.lights import Lights
 from team3200.commands.lights import ExampleButton
+from team3200.commands.align import AlignButton
 import team3200.subsystems.driveTrain
 import team3200.subsystems.healthMonitor
 
 class MyRobot(commandbased.CommandBasedRobot):
     
-    def robotInit(self):
+    def robotInit(self): 
         '''This is where the robot code starts.'''
         team3200.getRobot = lambda x=0:self
         self.map = team3200.robotMap.RobotMap()
         self.networkTableInit()
         self.dtSub = team3200.subsystems.driveTrain.DriveTrainSub()
         self.driveController = wpilib.XboxController(0)
-        self.createButtons()
+        self.controllerInit()
         self.healthMonitor = team3200.subsystems.healthMonitor.HealthMonitor()
     
     def networkTableInit(self):
@@ -34,16 +35,19 @@ class MyRobot(commandbased.CommandBasedRobot):
         
 
     def controllerInit(self):
-        self.driveController = wpilib.XboxController(0)
-        self.lightButton = JoystickButton(self.driveController, 3)
-
+        self.driveController = wpilib.XboxController(self.map.controllerMap.driverController['controllerId'])
+        self.auxController = wpilib.XboxController(self.map.controllerMap.auxController['controllerId'])
+        self.lightButton = JoystickButton(self.auxController, self.map.controllerMap.auxController['ledToggle'])
         self.lightButton.whenPressed(Lights())
-        self.exampleButton = JoystickButton(self.driveController, self.map.controllerMap.driverController['exampleButton'])
+        self.exampleButton = JoystickButton(self.auxController, self.map.controllerMap.auxController['exampleButton'])
         self.exampleButton.whenPressed(ExampleButton())
+        self.alignButton = JoystickButton(self.auxController, self.map.controllerMap.auxController['alignButton'])
+        self.alignButton.whenPressed(AlignButton())
 
     def driveInit(self):
         self.dtSub = team3200.subsystems.driveTrain.DriveTrainSub()
-
+    def exit(retval):
+        pass
 if __name__ == '__main__':
     try:
         #patch no exit error if not running on robot
@@ -68,6 +72,3 @@ if __name__ == '__main__':
             print("Failed to patch runtime. Error", err)
     
     wpilib.run(MyRobot,physics_enabled=True)
-
-def exit(retval):
-    pass
