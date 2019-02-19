@@ -10,8 +10,8 @@ if voltage gets too low.
 class HealthMonitor(Subsystem):
     def __init__(self):
         super().__init__("HMS")
-        self.warnVoltage = 8
-        self.critVoltage = 7
+        self.warnVoltage = 10
+        self.critVoltage = 9
         self.robot = team3200.getRobot()
         self.count = 0
         self.pdp = wpilib.PowerDistributionPanel()

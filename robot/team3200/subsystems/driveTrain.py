@@ -21,6 +21,7 @@ class DriveTrainSub(Subsystem):
         self.robot = team3200.getRobot();
         self.map = self.robot.map
         self.driveMotors = {}
+        self.canDrive = True
         
         for key, motorDesc in self.map.motorsMap.driveMotors.items():
             self.driveMotors[key] = team3200.motorHelper.createMotor(motorDesc)
@@ -29,11 +30,17 @@ class DriveTrainSub(Subsystem):
         self.driveTrain = dd.DifferentialDrive(self.driveMotors['leftMotor'], self.driveMotors['rightMotor'])
         
     def setTankDrive(self, leftSide, rightSide):
-        self.driveTrain.tankDrive(leftSide, rightSide)
+        if self.canDrive == True:
+            self.driveTrain.tankDrive(leftSide, rightSide)
         
     def setArcadeDrive(self, speed, rot):
         self.driveTrain.arcadeDrive(speed, rot)
 
     def initDefaultCommand(self):
-        self.setDefaultCommand(JoystickDrive(self.robot))
+        if self.defaultCommand == None:
+            self.setDefaultCommand(JoystickDrive())
         
+    def autoTurn(self, speedL, speedR):
+        self.canDrive = False
+        self.driveTrain.tankDrive(speedL, speedR)
+        self.canDrive = True

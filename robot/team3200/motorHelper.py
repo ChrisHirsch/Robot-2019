@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 
 import rev
 import ctre 
-
 
 
 def createMotor(motorDescp):
@@ -12,17 +11,12 @@ def createMotor(motorDescp):
         #if we want to use the built in encoder set it here
         if('pid' in motorDescp) and motorDescp['pid'] != None:
             motor = WPI_TalonFeedback(motorDescp)
-            motor.setInverted(motorDescp['inverted'])
             motor.setupPid()
         else:
             motor = ctre.wpi_talonsrx.WPI_TalonSRX(motorDescp['channel'])
-            motor.setInverted(motorDescp['inverted'])
-            
-            
+
     elif motorDescp['type'] == 'CANTalonFollower':
         motor =ctre.wpi_talonsrx.WPI_TalonSRX(motorDescp['channel'])
-        motor.setInverted(motorDescp['inverted'])
-        
         motor.set(ctre.wpi_talonsrx.ControlMode.Follower, motorDescp['masterChannel'])
         
     elif motorDescp['type'] == 'SparkMax':
@@ -32,7 +26,9 @@ def createMotor(motorDescp):
     else:
         print("Unknown Motor")
     
-    motor.setInverted(motorDescp['inverted'])
+    if 'inverted' in motorDescp: 
+        motor.setInverted(motorDescp['inverted'])
+    
     if 'currentLimits' in motorDescp:
         currentLimits = motorDescp['currentLimits']
         absMax = currentLimits['absMax']
