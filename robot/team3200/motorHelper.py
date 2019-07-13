@@ -1,6 +1,5 @@
     # -*- coding: utf-8 -*-
 
-import rev
 import ctre 
 
 
@@ -19,9 +18,10 @@ def createMotor(motorDescp):
         motor =ctre.wpi_talonsrx.WPI_TalonSRX(motorDescp['channel'])
         motor.set(ctre.wpi_talonsrx.ControlMode.Follower, motorDescp['masterChannel'])
         
+        
     elif motorDescp['type'] == 'SparkMax':
         '''This is where SparkMax motor controllers are set up'''
-        motor = rev.CANSparkMax(motorDescp['channel'], motorDescp['motorType'])
+        #motor = rev.CANSparkMax(motorDescp['channel'], motorDescp['motorType'])
         
     else:
         print("Unknown Motor")
@@ -87,7 +87,8 @@ class WPI_TalonFeedback(ctre.wpi_talonsrx.WPI_TalonSRX):
     def set(self, speed):
         return ctre.wpi_talonsrx.WPI_TalonSRX.set(self, self.controlType, speed * self.kInput)
             
-class SparkMaxFeedback(rev.CANSparkMax):
+'''class SparkMaxFeedback(rev.CANSparkMax):
     def __init__(self, motorDescp):
         rev.CANSparkMax.__init__(self, motorDescp['channel'], motorDescp['motorType'])
         self.motorDescp = motorDescp
+'''

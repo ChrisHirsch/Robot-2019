@@ -41,3 +41,15 @@ class Lights(InstantCommand):
         else:
             self.table.putNumber('ledMode', LedMode.kOFF)
             
+
+#class SignalLeft(InstantCommand):
+#    def __init__(self):
+#        self.table = NetworkTables.getTable('limelight')
+#        
+#    def execute(self):
+#        if(self.table.getNumber('ledMode', None) != 4):
+#            self.table.putNumber('ledMode', 4)
+#        else:
+#            self.table.putNumber('ledMode', LedMode.kOFF)
+
+            

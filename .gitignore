@@ -104,7 +104,7 @@ venv.bak/
 .mypy_cache/
 
 # .*_config
-/opkg_cache
-/pip_cache
+../opkg_cache
+../pip_cache
 .deploy_cfg
 .installer_config

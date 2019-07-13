@@ -30,12 +30,12 @@ class CANMap():
         '''The code below is an example of code for the SparkMax motor controllers'''
         #shooterMotors['RotMotor'] = {'channel':4, 'inverted':False, 'type':'SparkMax', 'pid':rotPid, 'motorType':MotorType.kBrushless}
         '''The code below is for controlling TalonSRX motor controllers as well as their followers'''
-        driveMotors['leftMotor'] = {'channel':0, 'inverted':True, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
-        driveMotors['leftFollower'] = {'channel':3, 'inverted':True, 'type':'CANTalonFollower', 'masterChannel':0, "rampRate":rampRate}
+        driveMotors['leftMotor'] = {'channel':0, 'inverted':False, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
+        driveMotors['leftFollower'] = {'channel':3, 'inverted':False, 'type':'CANTalonFollower', 'masterChannel':0, "rampRate":rampRate}
         driveMotors['rightMotor'] = {'channel':1, 'inverted':False, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
         driveMotors['rightFollower'] = {'channel':2, 'inverted':False, 'type':'CANTalonFollower', 'masterChannel':1, "rampRate":rampRate}
         
-        lifterMotors['liftMotor'] = {'channel':4, 'inverted':True, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
+        lifterMotors['liftMotor'] = {'channel':4, 'inverted':False, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
         lifterMotors['liftMotor2'] = {'channel':5, 'inverted':False, 'type':'CANTalonFollower', 'masterChannel':4, "rampRate":rampRate}
         lifterMotors['roller'] = {'channel':6, 'inverted':False, 'type':'CANTalon', 'pid':pid, "rampRate":rampRate}
         
@@ -44,7 +44,7 @@ class CANMap():
 
 class PneumaticsMap():
     def __init__(self):
-        self.pcmCan = 1
+        self.pcmCan = 0
         self.forwardChannel = 0
         self.reverseChannel = 1
     
@@ -59,16 +59,18 @@ class ControllerMap():
         auxController['controllerId'] = 1
         
         driverController['leftTread'] = 1
+        driverController['leftRot'] = 0
         if hal.isSimulation():
             driverController['rightTread'] = 3
         else:
             driverController['rightTread'] = 5
-
+        '''Create buttons for the drive controller'''
         driverController['ledToggle'] = wpilib.XboxController.Button.kX
         driverController['alignButton'] = wpilib.XboxController.Button.kA
         driverController['leftButton'] = wpilib.XboxController.Button.kBumperLeft
         driverController['rightButton'] = wpilib.XboxController.Button.kBumperRight
-        
+        driverController['straightButton'] = wpilib.XboxController.Button.kY
+        '''Create buttons for the aux controller'''
         auxController['LowerButton'] = wpilib.XboxController.Button.kBumperLeft
         auxController['RaiseButton'] = wpilib.XboxController.Button.kBumperRight
         auxController['StopButton'] = wpilib.XboxController.Button.kY
